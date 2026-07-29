@@ -1,0 +1,350 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Instituto Tinello de Música — design system
+ * Conceito: "um palco moderno onde a música ganha vida."
+ * Preto profundo + dourado/amarelo vibrante + branco.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-gold-deep: var(--gold-deep);
+  --color-ink: var(--ink);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --radius: 0.75rem;
+
+  --ink: oklch(0.09 0 0);
+  --background: oklch(0.09 0 0);
+  --foreground: oklch(0.98 0 0);
+  --surface: oklch(0.14 0.005 90);
+  --surface-2: oklch(0.19 0.008 90);
+
+  --card: oklch(0.14 0.005 90);
+  --card-foreground: oklch(0.98 0 0);
+  --popover: oklch(0.14 0.005 90);
+  --popover-foreground: oklch(0.98 0 0);
+
+  --gold: oklch(0.83 0.17 88);
+  --gold-soft: oklch(0.9 0.13 92);
+  --gold-deep: oklch(0.68 0.15 72);
+
+  --primary: var(--gold);
+  --primary-foreground: oklch(0.12 0 0);
+  --secondary: oklch(0.19 0.008 90);
+  --secondary-foreground: oklch(0.98 0 0);
+  --muted: oklch(0.19 0.008 90);
+  --muted-foreground: oklch(0.72 0.01 90);
+  --accent: oklch(0.22 0.02 88);
+  --accent-foreground: oklch(0.98 0 0);
+  --destructive: oklch(0.6 0.22 27);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 14%);
+  --ring: var(--gold);
+
+  --gradient-gold: linear-gradient(120deg, var(--gold-deep), var(--gold), var(--gold-soft));
+  --gradient-stage: radial-gradient(
+    120% 90% at 50% -10%,
+    color-mix(in oklab, var(--gold) 22%, transparent),
+    transparent 62%
+  );
+  --shadow-stage: 0 30px 80px -30px color-mix(in oklab, var(--gold) 35%, transparent);
+  --shadow-deep: 0 24px 60px -24px oklch(0 0 0 / 0.85);
+  --ease-stage: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.015em;
+    line-height: 1.02;
+  }
+
+  ::selection {
+    background: var(--gold);
+    color: oklch(0.12 0 0);
+  }
+}
+
+/* ---------- Utilities ---------- */
+
+@utility text-gold-gradient {
+  background-image: var(--gradient-gold);
+  background-clip: text;
+  color: transparent;
+}
+
+@utility stage-glow {
+  background-image: var(--gradient-stage);
+}
+
+@utility section-shell {
+  padding-inline: 1.25rem;
+  padding-block: 5rem;
+  @media (min-width: 768px) {
+    padding-inline: 2rem;
+    padding-block: 7.5rem;
+  }
+}
+
+@utility gold-rule {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, var(--gold) 60%, transparent),
+    transparent
+  );
+}
+
+/* Botão premium com aura dourada */
+@utility btn-gold {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 0.9rem 1.9rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  color: oklch(0.12 0 0);
+  background-image: var(--gradient-gold);
+  box-shadow: 0 0 0 0 color-mix(in oklab, var(--gold) 40%, transparent);
+  transition:
+    transform 0.5s var(--ease-stage),
+    box-shadow 0.5s var(--ease-stage);
+  will-change: transform;
+  &:hover {
+    transform: translateY(-2px) scale(1.035);
+    box-shadow:
+      0 0 34px 2px color-mix(in oklab, var(--gold) 45%, transparent),
+      0 18px 40px -20px oklch(0 0 0 / 0.9);
+  }
+  &:active {
+    transform: translateY(0) scale(0.99);
+  }
+}
+
+@utility btn-ghost-gold {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 0.9rem 1.9rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--foreground);
+  border: 1px solid color-mix(in oklab, var(--gold) 45%, transparent);
+  background: color-mix(in oklab, var(--gold) 6%, transparent);
+  transition:
+    transform 0.5s var(--ease-stage),
+    background 0.5s var(--ease-stage),
+    box-shadow 0.5s var(--ease-stage),
+    border-color 0.5s var(--ease-stage);
+  &:hover {
+    transform: translateY(-2px) scale(1.02);
+    border-color: var(--gold);
+    background: color-mix(in oklab, var(--gold) 14%, transparent);
+    box-shadow: 0 0 26px -4px color-mix(in oklab, var(--gold) 40%, transparent);
+  }
+}
+
+/* Link com underline animado */
+@utility link-underline {
+  position: relative;
+  transition: color 0.4s var(--ease-stage);
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    height: 1px;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: right;
+    background: var(--gold);
+    transition: transform 0.5s var(--ease-stage);
+  }
+  &:hover {
+    color: var(--gold);
+  }
+  &:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+/* Card escuro de palco */
+@utility stage-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  border: 1px solid var(--border);
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--surface) 92%, transparent),
+    var(--ink)
+  );
+  transition:
+    transform 0.6s var(--ease-stage),
+    border-color 0.6s var(--ease-stage),
+    box-shadow 0.6s var(--ease-stage);
+  &:hover {
+    transform: translateY(-8px);
+    border-color: color-mix(in oklab, var(--gold) 55%, transparent);
+    box-shadow:
+      var(--shadow-deep),
+      0 0 40px -14px color-mix(in oklab, var(--gold) 55%, transparent);
+  }
+}
+
+/* ---------- Reveal on scroll ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 1s var(--ease-stage),
+    transform 1s var(--ease-stage);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal[data-visible="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Keyframes ---------- */
+
+@keyframes itm-float-note {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+    opacity: 0;
+  }
+  12% {
+    opacity: var(--note-opacity, 0.16);
+  }
+  85% {
+    opacity: var(--note-opacity, 0.16);
+  }
+  100% {
+    transform: translate3d(var(--note-drift, 30px), -105vh, 0) rotate(var(--note-spin, 18deg));
+    opacity: 0;
+  }
+}
+
+@keyframes itm-breathe {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes itm-sweep {
+  0%,
+  100% {
+    transform: translateX(-6%) rotate(-2deg);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translateX(6%) rotate(2deg);
+    opacity: 0.6;
+  }
+}
+
+@keyframes itm-scroll-hint {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(8px);
+    opacity: 1;
+  }
+}
+
+.animate-breathe {
+  animation: itm-breathe 9s ease-in-out infinite;
+}
+.animate-sweep {
+  animation: itm-sweep 14s ease-in-out infinite;
+}
+.animate-scroll-hint {
+  animation: itm-scroll-hint 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
